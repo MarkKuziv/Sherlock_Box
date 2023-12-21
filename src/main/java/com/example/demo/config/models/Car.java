@@ -1,5 +1,6 @@
 package com.example.demo.config.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -18,9 +19,10 @@ public class Car {
     @Column (name = "engine_capacity")
     private float engineCapacity;
     @OneToOne
-    @JoinColumn(name = "user_id", unique = true)
+    @JoinColumn(name = "user_id")
     private User user;
-    @OneToMany(mappedBy = "сar", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "car")
+    @JsonIgnore
     private List<Order> orders;
 
     public Car() {
@@ -33,6 +35,14 @@ public class Car {
         this.engineCapacity = engineCapacity;
         this.user = user;
         this.orders = orders;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

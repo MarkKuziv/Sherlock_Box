@@ -1,7 +1,7 @@
 package com.example.demo.config.models;
 
 
-import com.example.demo.config.models.Car;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -17,8 +17,6 @@ public class User {
     private String lastName;
     @Column(name = ("number"))
     private String number;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Car car;
 
     public User() {
 
@@ -56,19 +54,11 @@ public class User {
         this.number = number;
     }
 
-    public Car getCar() {
-        return car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
-    }
-
-    public User(String name, String lastName, String number, Car car) {
+    public User(String name, String lastName, String number) {
         this.name = name;
         this.lastName = lastName;
         this.number = number;
-        this.car = car;
+
     }
 
     @Override
@@ -78,7 +68,6 @@ public class User {
                 ", name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", number='" + number + '\'' +
-                ", car=" + car +
                 '}';
     }
 }

@@ -1,6 +1,5 @@
 package com.example.demo.config.models;
 
-import com.example.demo.config.models.Car;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,18 +11,18 @@ public class Order {
     private Long id;
     @Column(name = "type")
     private String type;
-    @ManyToOne
-    @JoinColumn(name = "car", nullable = false)
-    private Car сar;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "car_id")
+    private Car car;
 
 
     public Order() {
 
     }
 
-    public Order(String type, Car сar) {
+    public Order(String type, Car car) {
         this.type = type;
-        this.сar = сar;
+        this.car = car;
     }
 
     public Long getId() {
@@ -42,12 +41,12 @@ public class Order {
         this.type = type;
     }
 
-    public Car getСar() {
-        return сar;
+    public Car getCar() {
+        return car;
     }
 
-    public void setСar(Car сar) {
-        this.сar = сar;
+    public void setCar(Car car) {
+        this.car = car;
     }
 
     @Override
@@ -55,7 +54,7 @@ public class Order {
         return "Order{" +
                 "id=" + id +
                 ", type='" + type + '\'' +
-                ", сar=" + сar +
+                ", сar=" + car +
                 '}';
     }
 }
