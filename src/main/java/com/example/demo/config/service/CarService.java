@@ -26,7 +26,7 @@ public class CarService {
 
     public ResponseEntity<Car> getCarById(Long id) throws Exception {
         Car car = carRepository.findCarById(id);
-        if (isNull(id)){
+        if (isNull(car)){
             LOGGER.info("Car with " + id + " not found");
             throw new CarNotFoundException(String.format("Car with %d not found", id)); // якщо не знайшов кидай помилку
         }
@@ -34,7 +34,8 @@ public class CarService {
     }
 
     public ResponseEntity<String> deletedCarById(Long id) throws CarNotFoundException {
-        if (isNull(id)) {
+        Car car = carRepository.findCarById(id);
+        if (isNull(car)) {
             carRepository.deleteById(id);
             LOGGER.info("Deleted car");
             return new ResponseEntity<>("Deleted car", HttpStatus.OK);

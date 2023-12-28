@@ -1,6 +1,8 @@
 package com.example.demo;
 
 import com.example.demo.config.controllers.UserController;
+import com.example.demo.config.exception.CarNotFoundException;
+import com.example.demo.config.exception.OrderNotFoundException;
 import com.example.demo.config.models.User;
 import com.example.demo.config.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,15 +10,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
-
-import static org.assertj.core.api.FactoryBasedNavigableListAssert.assertThat;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class UserControllerTests {
+    private static final Long ID = 1L;
 
     private UserController userController;
 
@@ -26,6 +24,8 @@ public class UserControllerTests {
     @Mock
     private User user;
 
+
+
     @BeforeEach
     public void setUp() {
         userController = new UserController(userService);
@@ -33,10 +33,31 @@ public class UserControllerTests {
 
 
     @Test
-    public void itAddsUser() {
+    public void itAddsUser() throws CarNotFoundException {
         userController.addUser(user);
 
         verify(userService).addUser(user);
+    }
+
+    @Test
+    public void itGetsUser() throws Exception {
+        userController.getUserById(ID);
+
+        verify(userService).getUserById(ID);
+    }
+
+    @Test
+    public void itDeletesUser() throws CarNotFoundException {
+        userController.deletedUserById(ID);
+
+        verify(userService).deletedUserById(ID);
+    }
+
+    @Test
+    public void itUpdatesUser() throws OrderNotFoundException, CarNotFoundException {
+        userController.updateUser(user);
+
+        verify(userService).updateUser(user);
     }
 
 }

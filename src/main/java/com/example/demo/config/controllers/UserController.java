@@ -1,5 +1,6 @@
 package com.example.demo.config.controllers;
 
+import com.example.demo.config.exception.CarNotFoundException;
 import com.example.demo.config.exception.OrderNotFoundException;
 import com.example.demo.config.models.Car;
 import com.example.demo.config.models.Order;
@@ -25,20 +26,20 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    @PostMapping(value = "/add",
+    @PostMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addUser(@RequestBody User user){
+    public ResponseEntity<String> addUser(@RequestBody User user) throws CarNotFoundException {
         return userService.addUser(user);
     }
 
-    @DeleteMapping(value = "/deleted/{id}")
-    public ResponseEntity<String> deletedUserById(@PathVariable long id){
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<String> deletedUserById(@PathVariable long id) throws CarNotFoundException {
         return userService.deletedUserById(id);
     }
 
-    @PutMapping(value = "/update")
-    public void updateUser(@RequestBody User user) throws OrderNotFoundException {
+    @PutMapping()
+    public void updateUser(@RequestBody User user) throws OrderNotFoundException, CarNotFoundException {
         userService.updateUser(user);
     }
 }

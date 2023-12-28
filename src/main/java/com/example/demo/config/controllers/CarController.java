@@ -22,20 +22,20 @@ public class CarController {
         return carService.getCarById(id);
     }
 
-    @PostMapping(value = "/car/add",
+    @PostMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addCar(@RequestBody Car car){
+    public ResponseEntity<String> addCar(@RequestBody Car car) throws CarNotFoundException {
 
         return carService.addCar(car);
     }
 
-    @DeleteMapping(value = "/car/deleted/{id}")
-    public ResponseEntity<String> deletedCarById(@PathVariable long id){
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<String> deletedCarById(@PathVariable long id) throws CarNotFoundException {
         return carService.deletedCarById(id);
     }
 
-    @PutMapping(value = "/car/update")
+    @PutMapping()
     public void updateCompany(@RequestBody Car car) throws CarNotFoundException {
         carService.updateCar(car);
     }

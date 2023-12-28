@@ -29,7 +29,7 @@ public class OrderService {
 
     public ResponseEntity<Order> getOrderById(Long id) throws Exception {
         Order order = orderRepository.findOrderById(id);
-        if (isNull(id)){
+        if (isNull(order)){
             LOGGER.info("Order with " + id + " not found");
             throw new CarNotFoundException(String.format("Order with %d not found", id)); // якщо не знайшов кидай помилку
         }
@@ -37,7 +37,8 @@ public class OrderService {
     }
 
     public ResponseEntity<String> deletedOrderById(Long id) throws CarNotFoundException {
-        if (nonNull(id)) {
+        Order order = orderRepository.findOrderById(id);
+        if (nonNull(order)) {
             orderRepository.deleteById(id);
             LOGGER.info("Deleted order");
             return new ResponseEntity<>("Deleted order", HttpStatus.OK);

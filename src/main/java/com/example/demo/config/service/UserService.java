@@ -28,7 +28,7 @@ public class UserService {
 
     public ResponseEntity<User> getUserById(Long id) throws Exception {
         User user = userRepository.findUserById(id);
-        if (isNull(id)){
+        if (isNull(user)){
             LOGGER.info("User with " + id + " not found");
             throw new CarNotFoundException(String.format("User with %d not found", id)); // якщо не знайшов кидай помилку
         }
@@ -36,7 +36,8 @@ public class UserService {
     }
 
     public ResponseEntity<String> deletedUserById(Long id) throws CarNotFoundException {
-        if (nonNull(id)) {
+        User user = userRepository.findUserById(id);
+        if (nonNull(user)) {
             userRepository.deleteById(id);
             LOGGER.info("Deleted user");
             return new ResponseEntity<>("Deleted user", HttpStatus.OK);
