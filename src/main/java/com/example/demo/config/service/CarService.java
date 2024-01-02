@@ -36,11 +36,11 @@ public class CarService {
     public ResponseEntity<String> deletedCarById(Long id) throws CarNotFoundException {
         Car car = carRepository.findCarById(id);
         if (isNull(car)) {
-            carRepository.deleteById(id);
-            LOGGER.info("Deleted car");
-            return new ResponseEntity<>("Deleted car", HttpStatus.OK);
+            throw new CarNotFoundException(String.format("Car with %d not found", id));
         }
-        throw new CarNotFoundException(String.format("Car with %d not found", id));
+        carRepository.deleteById(id);
+        LOGGER.info("Deleted car");
+        return new ResponseEntity<>("Deleted car", HttpStatus.OK);
     }
 
     public void updateCar(Car newCar) throws CarNotFoundException {
