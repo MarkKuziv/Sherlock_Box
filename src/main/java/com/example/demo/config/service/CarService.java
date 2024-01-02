@@ -45,13 +45,13 @@ public class CarService {
 
     public void updateCar(Car newCar) throws CarNotFoundException {
         Car car = carRepository.findCarById(newCar.getId());
-        if (nonNull(car)) {
+        if (isNull(car)) {
+            LOGGER.info("Car with: " + newCar.getId() + "not found");
+            throw new CarNotFoundException(String.format("Car with %d not found", newCar.getId()));
+        } else {
             update(car, newCar);
             LOGGER.info("Updated with: " + newCar.getId());
             carRepository.save(car);
-        } else {
-            LOGGER.info("Car with: " + newCar.getId() + "not found");
-            throw new CarNotFoundException(String.format("Car with %d not found", newCar.getId())); // якщо не знайшов кидай помилку
         }
     }
 
@@ -62,10 +62,12 @@ public class CarService {
     }
 
     public ResponseEntity<String> addCar(Car car) throws CarNotFoundException {
-        if (nonNull(car)) {
+        if (isNull(car)) {
+            throw new CarNotFoundException(String.format("Car with %d not found", car.getId()));
+        } else {
             carRepository.save(car);
             return new ResponseEntity<>("Added", HttpStatus.OK);
+
         }
-        throw new CarNotFoundException(String.format("Car with %d not found", car.getId()));
     }
 }

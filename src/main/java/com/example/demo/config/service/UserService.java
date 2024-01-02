@@ -37,23 +37,25 @@ public class UserService {
 
     public ResponseEntity<String> deletedUserById(Long id) throws CarNotFoundException {
         User user = userRepository.findUserById(id);
-        if (nonNull(user)) {
+        if (isNull(user)) {
+            throw new CarNotFoundException(String.format("User with %d not found", id));
+        }
+        else {
             userRepository.deleteById(id);
             LOGGER.info("Deleted user");
             return new ResponseEntity<>("Deleted user", HttpStatus.OK);
         }
-        throw new CarNotFoundException(String.format("User with %d not found", id));
     }
 
     public void updateUser(User newUser) throws CarNotFoundException {
         User user = userRepository.findUserById(newUser.getId());
-        if (nonNull(newUser)) {
+        if (isNull(newUser)) {
+            LOGGER.info("Order with " + newUser.getId() + " not found");
+            throw new CarNotFoundException(String.format("User with %d not found", newUser.getId()));
+        }else {
             update(user, newUser);
             LOGGER.info("Updated with: " + newUser.getId());
             userRepository.save(user);
-        }else {
-            LOGGER.info("Order with " + newUser.getId() + " not found");
-            throw new CarNotFoundException(String.format("User with %d not found", newUser.getId()));
         }
 
     }
@@ -65,11 +67,12 @@ public class UserService {
     }
 
     public ResponseEntity<String> addUser(User user) throws CarNotFoundException {
-        if (nonNull(user)) {
+        if (isNull(user)) {
+            throw new CarNotFoundException(String.format("User with %d not found", user.getId()));
+        }else {
             userRepository.save(user);
             return new ResponseEntity<>("Added", HttpStatus.OK);
         }
-        throw new CarNotFoundException(String.format("User with %d not found", user.getId()));
     }
 
 }

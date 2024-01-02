@@ -11,8 +11,8 @@ public class User {
     @Id
     @GeneratedValue
     private Long id;
-    @Column(name = "name")
-    private String name;
+    @Column(name = "first_name")
+    private String firstName;
     @Column(name = "last_name")
     private String lastName;
     @Column(name = ("number"))
@@ -31,11 +31,11 @@ public class User {
     }
 
     public String getName() {
-        return name;
+        return firstName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.firstName = name;
     }
 
     public String getLastName() {
@@ -54,8 +54,8 @@ public class User {
         this.number = number;
     }
 
-    public User(String name, String lastName, String number) {
-        this.name = name;
+    public User(String firstName, String lastName, String number) {
+        this.firstName = firstName;
         this.lastName = lastName;
         this.number = number;
 
@@ -65,7 +65,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", number='" + number + '\'' +
                 '}';

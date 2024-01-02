@@ -38,23 +38,24 @@ public class OrderService {
 
     public ResponseEntity<String> deletedOrderById(Long id) throws CarNotFoundException {
         Order order = orderRepository.findOrderById(id);
-        if (nonNull(order)) {
+        if (isNull(order)) {
+            throw new CarNotFoundException(String.format("Order with %d not found", id));
+        }else {
             orderRepository.deleteById(id);
             LOGGER.info("Deleted order");
             return new ResponseEntity<>("Deleted order", HttpStatus.OK);
         }
-        throw new CarNotFoundException(String.format("Order with %d not found", id));
     }
 
     public void updateOrder(Order newOrder) throws OrderNotFoundException {
         Order order = orderRepository.findOrderById(newOrder.getId());
-        if (nonNull(order)) {
+        if (isNull(order)) {
+            LOGGER.info("Order with " + newOrder.getId() + "not found");
+            throw new OrderNotFoundException(String.format("Car with %d not found", newOrder.getId()));
+        } else {
             update(order, newOrder);
             LOGGER.info("Updated with: " + newOrder.getId());
             orderRepository.save(order);
-        } else {
-            LOGGER.info("Order with " + newOrder.getId() + "not found");
-            throw new OrderNotFoundException(String.format("Car with %d not found", newOrder.getId()));
         }
 
     }
@@ -65,11 +66,14 @@ public class OrderService {
     }
 
     public ResponseEntity<String> addOrder(Order order) throws CarNotFoundException {
-        if (nonNull(order)) {
+        if (isNull(order)) {
+            throw new CarNotFoundException(String.format("Order with %d not found", order.getId()));
+        }
+        else {
             orderRepository.save(order);
             return new ResponseEntity<>("Added", HttpStatus.OK);
         }
-        throw new CarNotFoundException(String.format("Order with %d not found", order.getId()));
+
     }
 }
 
