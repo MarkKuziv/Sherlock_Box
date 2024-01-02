@@ -38,7 +38,7 @@ public class UserController {
         return userService.deletedUserById(id);
     }
 
-    @PutMapping()
+    @PutMapping
     public void updateUser(@RequestBody User user) throws OrderNotFoundException, CarNotFoundException {
         userService.updateUser(user);
     }

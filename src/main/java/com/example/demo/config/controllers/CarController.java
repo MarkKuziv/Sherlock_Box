@@ -35,7 +35,7 @@ public class CarController {
         return carService.deletedCarById(id);
     }
 
-    @PutMapping()
+    @PutMapping
     public void updateCompany(@RequestBody Car car) throws CarNotFoundException {
         carService.updateCar(car);
     }

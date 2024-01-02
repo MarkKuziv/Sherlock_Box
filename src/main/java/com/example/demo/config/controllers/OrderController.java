@@ -36,7 +36,7 @@ public class OrderController {
         return orderService.deletedOrderById(id);
     }
 
-    @PutMapping()
+    @PutMapping
     public void updateOrder(@RequestBody Order order) throws OrderNotFoundException {
         orderService.updateOrder(order);
     }
