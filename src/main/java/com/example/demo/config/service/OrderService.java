@@ -40,25 +40,23 @@ public class OrderService {
         Order order = orderRepository.findOrderById(id);
         if (isNull(order)) {
             throw new CarNotFoundException(String.format("Order with %d not found", id));
-        }else {
+        }
             orderRepository.deleteById(id);
             LOGGER.info("Deleted order");
             return new ResponseEntity<>("Deleted order", HttpStatus.OK);
         }
-    }
+
 
     public void updateOrder(Order newOrder) throws OrderNotFoundException {
         Order order = orderRepository.findOrderById(newOrder.getId());
         if (isNull(order)) {
             LOGGER.info("Order with " + newOrder.getId() + "not found");
             throw new OrderNotFoundException(String.format("Car with %d not found", newOrder.getId()));
-        } else {
+        }
             update(order, newOrder);
             LOGGER.info("Updated with: " + newOrder.getId());
             orderRepository.save(order);
         }
-
-    }
 
     public void update(Order order, Order newOrder){
         order.setType(newOrder.getType());
@@ -69,11 +67,8 @@ public class OrderService {
         if (isNull(order)) {
             throw new CarNotFoundException(String.format("Order with %d not found", order.getId()));
         }
-        else {
             orderRepository.save(order);
             return new ResponseEntity<>("Added", HttpStatus.OK);
-        }
-
     }
 }
 

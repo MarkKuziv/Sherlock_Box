@@ -40,28 +40,24 @@ public class UserService {
         if (isNull(user)) {
             throw new CarNotFoundException(String.format("User with %d not found", id));
         }
-        else {
             userRepository.deleteById(id);
             LOGGER.info("Deleted user");
             return new ResponseEntity<>("Deleted user", HttpStatus.OK);
         }
-    }
 
     public void updateUser(User newUser) throws CarNotFoundException {
         User user = userRepository.findUserById(newUser.getId());
         if (isNull(newUser)) {
             LOGGER.info("Order with " + newUser.getId() + " not found");
             throw new CarNotFoundException(String.format("User with %d not found", newUser.getId()));
-        }else {
+        }
             update(user, newUser);
             LOGGER.info("Updated with: " + newUser.getId());
             userRepository.save(user);
-        }
-
     }
 
     public void update(User user, User newUser){
-       user.setName(newUser.getName());
+       user.setFirstName(newUser.getFirstName());
        user.setNumber(newUser.getNumber());
        user.setLastName(newUser.getLastName());
     }
@@ -69,10 +65,8 @@ public class UserService {
     public ResponseEntity<String> addUser(User user) throws CarNotFoundException {
         if (isNull(user)) {
             throw new CarNotFoundException(String.format("User with %d not found", user.getId()));
-        }else {
+        }
             userRepository.save(user);
             return new ResponseEntity<>("Added", HttpStatus.OK);
         }
     }
-
-}
