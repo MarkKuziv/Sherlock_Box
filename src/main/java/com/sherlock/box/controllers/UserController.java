@@ -2,6 +2,7 @@ package com.sherlock.box.controllers;
 
 import com.sherlock.box.exception.CarNotFoundException;
 import com.sherlock.box.exception.OrderNotFoundException;
+import com.sherlock.box.exception.UserNotFoundException;
 import com.sherlock.box.models.User;
 import com.sherlock.box.service.UserService;
 import org.springframework.http.MediaType;
@@ -19,24 +20,24 @@ public class UserController {
 
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable long id) throws Exception {
+    public ResponseEntity<User> getUserById(@PathVariable long id) throws UserNotFoundException {
         return userService.getUserById(id);
     }
 
     @PostMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addUser(@RequestBody User user) throws CarNotFoundException {
+    public ResponseEntity<String> addUser(@RequestBody User user) throws UserNotFoundException {
         return userService.addUser(user);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<String> deletedUserById(@PathVariable long id) throws CarNotFoundException {
+    public ResponseEntity<String> deletedUserById(@PathVariable long id) throws UserNotFoundException {
         return userService.deletedUserById(id);
     }
 
     @PutMapping
-    public void updateUser(@RequestBody User user) throws OrderNotFoundException, CarNotFoundException {
+    public void updateUser(@RequestBody User user) throws UserNotFoundException {
         userService.updateUser(user);
     }
 }

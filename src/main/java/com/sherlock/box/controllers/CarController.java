@@ -18,7 +18,7 @@ public class CarController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Car> getCarById(@PathVariable long id) throws Exception {
+    public ResponseEntity<Car> getCarById(@PathVariable long id) throws CarNotFoundException{
         return carService.getCarById(id);
     }
 

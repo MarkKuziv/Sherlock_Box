@@ -1,6 +1,5 @@
 package com.sherlock.box.service;
 
-import com.sherlock.box.exception.CarNotFoundException;
 import com.sherlock.box.exception.OrderNotFoundException;
 import com.sherlock.box.models.Order;
 import com.sherlock.box.repositories.OrderRepository;
@@ -24,23 +23,22 @@ public class OrderService {
     }
 
 
-    public ResponseEntity<Order> getOrderById(Long id) throws Exception {
+    public ResponseEntity<Order> getOrderById(Long id) throws OrderNotFoundException {
         Order order = orderRepository.findOrderById(id);
         if (isNull(order)) {
             LOGGER.info("Order with " + id + " not found");
-            throw new CarNotFoundException(String.format("Order with %d not found", id)); // якщо не знайшов кидай помилку
+            throw new OrderNotFoundException(String.format("Order with %d not found", id));
         }
         LOGGER.info("Order has been got. ID:" + order.getId());
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
-    public ResponseEntity<String> deletedOrderById(Long id) throws CarNotFoundException {
+    public ResponseEntity<String> deletedOrderById(Long id) throws OrderNotFoundException {
         Order order = orderRepository.findOrderById(id);
         if (isNull(order)) {
-            throw new CarNotFoundException(String.format("Order with %d not found", id));
+            throw new OrderNotFoundException(String.format("Order with %d not found", id));
         }
         orderRepository.deleteById(id);
-        LOGGER.info("Order has been deleted. ID:" + order.getId());
         return new ResponseEntity<>("Order has been deleted. ID:" + order.getId(), HttpStatus.OK);
     }
 
@@ -49,7 +47,7 @@ public class OrderService {
         Order order = orderRepository.findOrderById(newOrder.getId());
         if (isNull(order)) {
             LOGGER.info("Order with " + newOrder.getId() + "not found");
-            throw new OrderNotFoundException(String.format("Car with %d not found", newOrder.getId()));
+            throw new OrderNotFoundException(String.format("Order with %d not found", newOrder.getId()));
         }
         update(order, newOrder);
         LOGGER.info("Order has been updated. ID:" + newOrder.getId());
@@ -61,9 +59,9 @@ public class OrderService {
         order.setCar(newOrder.getCar());
     }
 
-    public ResponseEntity<String> addOrder(Order order) throws CarNotFoundException {
+    public ResponseEntity<String> addOrder(Order order) throws OrderNotFoundException {
         if (isNull(order)) {
-            throw new CarNotFoundException(String.format("Order with %d not found", order.getId()));
+            throw new OrderNotFoundException(String.format("Order with %d not found", order.getId()));
         }
         orderRepository.save(order);
         return new ResponseEntity<>("Order has been deleted. ID:" + order.getId(), HttpStatus.OK);

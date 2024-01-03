@@ -23,13 +23,13 @@ public class CarService {
         this.carRepository = carRepository;
     }
 
-    public ResponseEntity<Car> getCarById(Long id) throws Exception {
+    public ResponseEntity<Car> getCarById(Long id) throws CarNotFoundException {
         Car car = carRepository.findCarById(id);
         if (isNull(car)) {
             LOGGER.info("Car with " + id + " not found");
             throw new CarNotFoundException(String.format("Car with %d not found", id)); // якщо не знайшов кидай помилку
         }
-        LOGGER.info("Order has been got. ID:" + car.getId());
+        LOGGER.info("Car has been got. ID:" + car.getId());
         return new ResponseEntity<>(car, HttpStatus.OK);
     }
 
@@ -39,7 +39,7 @@ public class CarService {
             throw new CarNotFoundException(String.format("Car with %d not found", id));
         }
         carRepository.deleteById(id);
-        return new ResponseEntity<>("Order has been added. ID:" + car.getId(), HttpStatus.OK);
+        return new ResponseEntity<>("Car has been added. ID:" + car.getId(), HttpStatus.OK);
     }
 
     public void updateCar(Car newCar) throws CarNotFoundException {
@@ -49,7 +49,7 @@ public class CarService {
             throw new CarNotFoundException(String.format("Car with %d not found", newCar.getId()));
         }
         update(car, newCar);
-        LOGGER.info("Order has been updated. ID:" + car.getId());
+        LOGGER.info("Car has been updated. ID:" + car.getId());
         carRepository.save(car);
     }
 
@@ -65,7 +65,7 @@ public class CarService {
             throw new CarNotFoundException(String.format("Car with %d not found", car.getId()));
         }
         carRepository.save(car);
-        return new ResponseEntity<>("Order has been added. ID:" + car.getId(), HttpStatus.OK);
+        return new ResponseEntity<>("Car has been added. ID:" + car.getId(), HttpStatus.OK);
 
 
     }

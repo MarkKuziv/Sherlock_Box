@@ -1,7 +1,4 @@
 package com.sherlock.box.models;
-
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity

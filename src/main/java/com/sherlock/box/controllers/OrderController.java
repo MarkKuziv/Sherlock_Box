@@ -4,7 +4,6 @@ import com.sherlock.box.exception.CarNotFoundException;
 import com.sherlock.box.exception.OrderNotFoundException;
 import com.sherlock.box.models.Order;
 import com.sherlock.box.service.OrderService;
-
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,19 +19,19 @@ public class OrderController {
 
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Order> getOrderById(@PathVariable long id) throws Exception {
+    public ResponseEntity<Order> getOrderById(@PathVariable long id) throws OrderNotFoundException {
         return orderService.getOrderById(id);
     }
 
     @PostMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addOrder(@RequestBody Order order) throws CarNotFoundException {
+    public ResponseEntity<String> addOrder(@RequestBody Order order) throws OrderNotFoundException {
         return orderService.addOrder(order);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<String> deletedOrderById(@PathVariable long id) throws CarNotFoundException {
+    public ResponseEntity<String> deletedOrderById(@PathVariable long id) throws OrderNotFoundException {
         return orderService.deletedOrderById(id);
     }
 
