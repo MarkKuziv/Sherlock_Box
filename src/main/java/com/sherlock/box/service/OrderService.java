@@ -42,6 +42,10 @@ public class OrderService {
         return new ResponseEntity<>("Order has been deleted. ID:" + order.getId(), HttpStatus.OK);
     }
 
+    public ResponseEntity<String> addOrder(Order order) {
+        orderRepository.save(order);
+        return new ResponseEntity<>("Order has been deleted. ID:" + order.getId(), HttpStatus.OK);
+    }
 
     public void updateOrder(Order newOrder) throws OrderNotFoundException {
         Order order = orderRepository.findOrderById(newOrder.getId());
@@ -54,17 +58,9 @@ public class OrderService {
         orderRepository.save(order);
     }
 
-    public void update(Order order, Order newOrder) {
+    private void update(Order order, Order newOrder) {
         order.setType(newOrder.getType());
         order.setCar(newOrder.getCar());
-    }
-
-    public ResponseEntity<String> addOrder(Order order) throws OrderNotFoundException {
-        if (isNull(order)) {
-            throw new OrderNotFoundException(String.format("Order with %d not found", order.getId()));
-        }
-        orderRepository.save(order);
-        return new ResponseEntity<>("Order has been deleted. ID:" + order.getId(), HttpStatus.OK);
     }
 }
 

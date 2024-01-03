@@ -42,6 +42,11 @@ public class UserService {
         return new ResponseEntity<>("User has been deleted. ID:" + user.getId(), HttpStatus.OK);
     }
 
+    public ResponseEntity<String> addUser(User user){
+        userRepository.save(user);
+        return new ResponseEntity<>("User has been added. ID:" + user.getId(), HttpStatus.OK);
+    }
+
     public void updateUser(User newUser) throws UserNotFoundException {
         User user = userRepository.findUserById(newUser.getId());
         if (isNull(newUser)) {
@@ -53,17 +58,9 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void update(User user, User newUser) {
+    private void update(User user, User newUser) {
         user.setFirstName(newUser.getFirstName());
         user.setNumber(newUser.getNumber());
         user.setLastName(newUser.getLastName());
-    }
-
-    public ResponseEntity<String> addUser(User user) throws UserNotFoundException {
-        if (isNull(user)) {
-            throw new UserNotFoundException(String.format("User with %d not found", user.getId()));
-        }
-        userRepository.save(user);
-        return new ResponseEntity<>("User has been added. ID:" + user.getId(), HttpStatus.OK);
     }
 }

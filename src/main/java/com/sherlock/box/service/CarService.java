@@ -42,6 +42,11 @@ public class CarService {
         return new ResponseEntity<>("Car has been added. ID:" + car.getId(), HttpStatus.OK);
     }
 
+    public ResponseEntity<String> addCar(Car car) {
+        carRepository.save(car);
+        return new ResponseEntity<>("Car has been added. ID:" + car.getId(), HttpStatus.OK);
+    }
+
     public void updateCar(Car newCar) throws CarNotFoundException {
         Car car = carRepository.findCarById(newCar.getId());
         if (isNull(car)) {
@@ -54,19 +59,10 @@ public class CarService {
     }
 
 
-    public void update(Car car, Car newCar) {
+    private void update(Car car, Car newCar) {
         car.setName(newCar.getName());
         car.setModel(newCar.getModel());
         car.setEngineCapacity(newCar.getEngineCapacity());
     }
 
-    public ResponseEntity<String> addCar(Car car) throws CarNotFoundException {
-        if (isNull(car)) {
-            throw new CarNotFoundException(String.format("Car with %d not found", car.getId()));
-        }
-        carRepository.save(car);
-        return new ResponseEntity<>("Car has been added. ID:" + car.getId(), HttpStatus.OK);
-
-
-    }
 }
