@@ -37,14 +37,14 @@ public class OrderControllerTests {
     }
 
     @Test
-    public void itAddsOrder() throws CarNotFoundException {
+    public void itAddsOrder() throws OrderNotFoundException {
         orderController.addOrder(order);
 
         verify(orderService).addOrder(order);
     }
 
     @Test
-    public void itDeletesOrder() throws CarNotFoundException {
+    public void itDeletesOrder() throws OrderNotFoundException {
         orderController.deletedOrderById(ID);
 
         verify(orderService).deletedOrderById(ID);

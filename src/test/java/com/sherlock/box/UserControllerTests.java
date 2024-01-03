@@ -3,6 +3,7 @@ package com.sherlock.box;
 import com.sherlock.box.controllers.UserController;
 import com.sherlock.box.exception.CarNotFoundException;
 import com.sherlock.box.exception.OrderNotFoundException;
+import com.sherlock.box.exception.UserNotFoundException;
 import com.sherlock.box.models.User;
 import com.sherlock.box.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,7 +34,7 @@ public class UserControllerTests {
 
 
     @Test
-    public void itAddsUser() throws CarNotFoundException {
+    public void itAddsUser() throws UserNotFoundException {
         userController.addUser(user);
 
         verify(userService).addUser(user);
@@ -47,14 +48,14 @@ public class UserControllerTests {
     }
 
     @Test
-    public void itDeletesUser() throws CarNotFoundException {
+    public void itDeletesUser() throws UserNotFoundException {
         userController.deletedUserById(ID);
 
         verify(userService).deletedUserById(ID);
     }
 
     @Test
-    public void itUpdatesUser() throws OrderNotFoundException, CarNotFoundException {
+    public void itUpdatesUser() throws UserNotFoundException {
         userController.updateUser(user);
 
         verify(userService).updateUser(user);
