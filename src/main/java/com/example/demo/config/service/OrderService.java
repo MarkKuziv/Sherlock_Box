@@ -33,6 +33,7 @@ public class OrderService {
             LOGGER.info("Order with " + id + " not found");
             throw new CarNotFoundException(String.format("Order with %d not found", id)); // якщо не знайшов кидай помилку
         }
+        LOGGER.info("Order has been got. ID:"+ order.getId());
         return new ResponseEntity<>(order, HttpStatus.OK );
     }
 
@@ -42,7 +43,7 @@ public class OrderService {
             throw new CarNotFoundException(String.format("Order with %d not found", id));
         }
             orderRepository.deleteById(id);
-            LOGGER.info("Deleted order");
+        LOGGER.info("Order has been deleted. ID:"+ order.getId());
             return new ResponseEntity<>("Deleted order", HttpStatus.OK);
         }
 
@@ -54,7 +55,7 @@ public class OrderService {
             throw new OrderNotFoundException(String.format("Car with %d not found", newOrder.getId()));
         }
             update(order, newOrder);
-            LOGGER.info("Updated with: " + newOrder.getId());
+            LOGGER.info("Order has been updated. ID:"+ newOrder.getId());
             orderRepository.save(order);
         }
 
@@ -67,6 +68,7 @@ public class OrderService {
         if (isNull(order)) {
             throw new CarNotFoundException(String.format("Order with %d not found", order.getId()));
         }
+        LOGGER.info("Order has been added. ID:"+ order.getId());
             orderRepository.save(order);
             return new ResponseEntity<>("Added", HttpStatus.OK);
     }

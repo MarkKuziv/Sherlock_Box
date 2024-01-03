@@ -32,6 +32,7 @@ public class UserService {
             LOGGER.info("User with " + id + " not found");
             throw new CarNotFoundException(String.format("User with %d not found", id)); // якщо не знайшов кидай помилку
         }
+        LOGGER.info("Order has been got. ID:"+ user.getId());
         return new ResponseEntity<>(user, HttpStatus.OK );
     }
 
@@ -41,7 +42,7 @@ public class UserService {
             throw new CarNotFoundException(String.format("User with %d not found", id));
         }
             userRepository.deleteById(id);
-            LOGGER.info("Deleted user");
+        LOGGER.info("Order has been deleted. ID:"+ user.getId());
             return new ResponseEntity<>("Deleted user", HttpStatus.OK);
         }
 
@@ -52,7 +53,7 @@ public class UserService {
             throw new CarNotFoundException(String.format("User with %d not found", newUser.getId()));
         }
             update(user, newUser);
-            LOGGER.info("Updated with: " + newUser.getId());
+        LOGGER.info("Order has been updated. ID:"+ user.getId());
             userRepository.save(user);
     }
 
@@ -66,6 +67,7 @@ public class UserService {
         if (isNull(user)) {
             throw new CarNotFoundException(String.format("User with %d not found", user.getId()));
         }
+        LOGGER.info("Order has been added. ID:"+ user.getId());
             userRepository.save(user);
             return new ResponseEntity<>("Added", HttpStatus.OK);
         }

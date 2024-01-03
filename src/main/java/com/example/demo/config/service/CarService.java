@@ -30,6 +30,7 @@ public class CarService {
             LOGGER.info("Car with " + id + " not found");
             throw new CarNotFoundException(String.format("Car with %d not found", id)); // якщо не знайшов кидай помилку
         }
+        LOGGER.info("Order has been got. ID:"+ car.getId());
         return new ResponseEntity<>(car, HttpStatus.OK );
     }
 
@@ -39,7 +40,7 @@ public class CarService {
             throw new CarNotFoundException(String.format("Car with %d not found", id));
         }
         carRepository.deleteById(id);
-        LOGGER.info("Deleted car");
+        LOGGER.info("Order has been deleted. ID:"+ car.getId());
         return new ResponseEntity<>("Deleted car", HttpStatus.OK);
     }
 
@@ -50,7 +51,7 @@ public class CarService {
             throw new CarNotFoundException(String.format("Car with %d not found", newCar.getId()));
         }
             update(car, newCar);
-            LOGGER.info("Updated with: " + newCar.getId());
+        LOGGER.info("Order has been updated. ID:"+ car.getId());
             carRepository.save(car);
         }
 
@@ -65,6 +66,7 @@ public class CarService {
         if (isNull(car)) {
             throw new CarNotFoundException(String.format("Car with %d not found", car.getId()));
         }
+        LOGGER.info("Order has been added. ID:"+ car.getId());
             carRepository.save(car);
             return new ResponseEntity<>("Added", HttpStatus.OK);
 
