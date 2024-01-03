@@ -28,12 +28,12 @@ public class UserService {
 
     public ResponseEntity<User> getUserById(Long id) throws Exception {
         User user = userRepository.findUserById(id);
-        if (isNull(user)){
+        if (isNull(user)) {
             LOGGER.info("User with " + id + " not found");
             throw new CarNotFoundException(String.format("User with %d not found", id)); // якщо не знайшов кидай помилку
         }
-        LOGGER.info("Order has been got. ID:"+ user.getId());
-        return new ResponseEntity<>(user, HttpStatus.OK );
+        LOGGER.info("Order has been got. ID:" + user.getId());
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     public ResponseEntity<String> deletedUserById(Long id) throws CarNotFoundException {
@@ -41,10 +41,9 @@ public class UserService {
         if (isNull(user)) {
             throw new CarNotFoundException(String.format("User with %d not found", id));
         }
-            userRepository.deleteById(id);
-        LOGGER.info("Order has been deleted. ID:"+ user.getId());
-            return new ResponseEntity<>("Deleted user", HttpStatus.OK);
-        }
+        userRepository.deleteById(id);
+        return new ResponseEntity<>("Order has been deleted. ID:" + user.getId(), HttpStatus.OK);
+    }
 
     public void updateUser(User newUser) throws CarNotFoundException {
         User user = userRepository.findUserById(newUser.getId());
@@ -52,23 +51,23 @@ public class UserService {
             LOGGER.info("Order with " + newUser.getId() + " not found");
             throw new CarNotFoundException(String.format("User with %d not found", newUser.getId()));
         }
-            update(user, newUser);
-        LOGGER.info("Order has been updated. ID:"+ user.getId());
-            userRepository.save(user);
+        update(user, newUser);
+        LOGGER.info("Order has been updated. ID:" + user.getId());
+        userRepository.save(user);
     }
 
-    public void update(User user, User newUser){
-       user.setFirstName(newUser.getFirstName());
-       user.setNumber(newUser.getNumber());
-       user.setLastName(newUser.getLastName());
+    public void update(User user, User newUser) {
+        user.setFirstName(newUser.getFirstName());
+        user.setNumber(newUser.getNumber());
+        user.setLastName(newUser.getLastName());
     }
 
     public ResponseEntity<String> addUser(User user) throws CarNotFoundException {
         if (isNull(user)) {
             throw new CarNotFoundException(String.format("User with %d not found", user.getId()));
         }
-        LOGGER.info("Order has been added. ID:"+ user.getId());
-            userRepository.save(user);
-            return new ResponseEntity<>("Added", HttpStatus.OK);
-        }
+        LOGGER.info("Order has been added. ID:" + user.getId());
+        userRepository.save(user);
+        return new ResponseEntity<>("Order has been added. ID:" + user.getId(), HttpStatus.OK);
     }
+}

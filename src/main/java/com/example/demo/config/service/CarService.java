@@ -26,12 +26,12 @@ public class CarService {
 
     public ResponseEntity<Car> getCarById(Long id) throws Exception {
         Car car = carRepository.findCarById(id);
-        if (isNull(car)){
+        if (isNull(car)) {
             LOGGER.info("Car with " + id + " not found");
             throw new CarNotFoundException(String.format("Car with %d not found", id)); // якщо не знайшов кидай помилку
         }
-        LOGGER.info("Order has been got. ID:"+ car.getId());
-        return new ResponseEntity<>(car, HttpStatus.OK );
+        LOGGER.info("Order has been got. ID:" + car.getId());
+        return new ResponseEntity<>(car, HttpStatus.OK);
     }
 
     public ResponseEntity<String> deletedCarById(Long id) throws CarNotFoundException {
@@ -40,8 +40,7 @@ public class CarService {
             throw new CarNotFoundException(String.format("Car with %d not found", id));
         }
         carRepository.deleteById(id);
-        LOGGER.info("Order has been deleted. ID:"+ car.getId());
-        return new ResponseEntity<>("Deleted car", HttpStatus.OK);
+        return new ResponseEntity<>("Order has been added. ID:" + car.getId(), HttpStatus.OK);
     }
 
     public void updateCar(Car newCar) throws CarNotFoundException {
@@ -50,13 +49,13 @@ public class CarService {
             LOGGER.info("Car with: " + newCar.getId() + "not found");
             throw new CarNotFoundException(String.format("Car with %d not found", newCar.getId()));
         }
-            update(car, newCar);
-        LOGGER.info("Order has been updated. ID:"+ car.getId());
-            carRepository.save(car);
-        }
+        update(car, newCar);
+        LOGGER.info("Order has been updated. ID:" + car.getId());
+        carRepository.save(car);
+    }
 
 
-    public void update(Car car, Car newCar){
+    public void update(Car car, Car newCar) {
         car.setName(newCar.getName());
         car.setModel(newCar.getModel());
         car.setEngineCapacity(newCar.getEngineCapacity());
@@ -66,9 +65,8 @@ public class CarService {
         if (isNull(car)) {
             throw new CarNotFoundException(String.format("Car with %d not found", car.getId()));
         }
-        LOGGER.info("Order has been added. ID:"+ car.getId());
-            carRepository.save(car);
-            return new ResponseEntity<>("Added", HttpStatus.OK);
+        carRepository.save(car);
+        return new ResponseEntity<>("Order has been added. ID:" + car.getId(), HttpStatus.OK);
 
 
     }
