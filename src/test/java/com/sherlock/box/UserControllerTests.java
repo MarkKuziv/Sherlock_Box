@@ -41,7 +41,7 @@ public class UserControllerTests {
     }
 
     @Test
-    public void itGetsUser() throws Exception {
+    public void itGetsUser() throws UserNotFoundException {
         userController.getUserById(ID);
 
         verify(userService).getUserById(ID);

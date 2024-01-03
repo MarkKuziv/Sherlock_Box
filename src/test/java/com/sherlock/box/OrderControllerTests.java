@@ -30,7 +30,7 @@ public class OrderControllerTests {
     }
 
     @Test
-    public void itGetsOrder() throws Exception {
+    public void itGetsOrder() throws OrderNotFoundException {
         orderController.getOrderById(ID);
 
         verify(orderService).getOrderById(ID);

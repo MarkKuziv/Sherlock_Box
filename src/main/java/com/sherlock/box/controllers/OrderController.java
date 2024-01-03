@@ -26,7 +26,7 @@ public class OrderController {
     @PostMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addOrder(@RequestBody Order order) throws OrderNotFoundException {
+    public ResponseEntity<String> addOrder(@RequestBody Order order) {
         return orderService.addOrder(order);
     }
 

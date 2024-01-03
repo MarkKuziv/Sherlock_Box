@@ -25,7 +25,7 @@ public class CarController {
     @PostMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addCar(@RequestBody Car car) throws CarNotFoundException {
+    public ResponseEntity<String> addCar(@RequestBody Car car) {
 
         return carService.addCar(car);
     }

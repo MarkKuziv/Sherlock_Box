@@ -39,7 +39,7 @@ public class CarControllerTests {
     }
 
     @Test
-    public void itGetsCar() throws Exception {
+    public void itGetsCar() throws CarNotFoundException {
         carController.getCarById(ID);
 
         verify(carService).getCarById(ID);

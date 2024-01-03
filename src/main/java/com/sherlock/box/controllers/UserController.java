@@ -27,7 +27,7 @@ public class UserController {
     @PostMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addUser(@RequestBody User user) throws UserNotFoundException {
+    public ResponseEntity<String> addUser(@RequestBody User user) {
         return userService.addUser(user);
     }
 
