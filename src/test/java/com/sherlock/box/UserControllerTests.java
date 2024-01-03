@@ -1,10 +1,10 @@
-package com.example.demo;
+package com.sherlock.box;
 
-import com.example.demo.controllers.UserController;
-import com.example.demo.exception.CarNotFoundException;
-import com.example.demo.exception.OrderNotFoundException;
-import com.example.demo.models.User;
-import com.example.demo.service.UserService;
+import com.sherlock.box.controllers.UserController;
+import com.sherlock.box.exception.CarNotFoundException;
+import com.sherlock.box.exception.OrderNotFoundException;
+import com.sherlock.box.models.User;
+import com.sherlock.box.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
