@@ -1,10 +1,10 @@
 package com.example.demo;
 
-import com.example.demo.config.controllers.UserController;
-import com.example.demo.config.exception.CarNotFoundException;
-import com.example.demo.config.exception.OrderNotFoundException;
-import com.example.demo.config.models.User;
-import com.example.demo.config.service.UserService;
+import com.example.demo.controllers.UserController;
+import com.example.demo.exception.CarNotFoundException;
+import com.example.demo.exception.OrderNotFoundException;
+import com.example.demo.models.User;
+import com.example.demo.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
