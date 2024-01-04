@@ -1,4 +1,4 @@
-package com.sherlock.box;
+package testsController;
 
 import com.sherlock.box.controllers.CarController;
 import com.sherlock.box.exception.CarNotFoundException;
@@ -32,7 +32,7 @@ public class CarControllerTests {
     }
 
     @Test
-    public void itAddsCar() throws CarNotFoundException {
+    public void itAddsCar() {
         carController.addCar(car);
 
         verify(carService).addCar(car);
