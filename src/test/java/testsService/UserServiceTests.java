@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -27,19 +28,19 @@ public class UserServiceTests {
     private User user;
 
     @BeforeEach
-    private void setUp(){
+    public void setUp(){
         userService = new UserService(userRepository);
     }
 
     @Test
-    public void itAddsCar() {
+    public void itAddsUser() {
         userService.addUser(user);
 
         verify(userRepository).save(user);
     }
 
     @Test
-    public void itUpdatesCar() throws UserNotFoundException {
+    public void itUpdatesUser() throws UserNotFoundException {
         when(user.getId()).thenReturn(ID);
         when(userRepository.findUserById(user.getId())).thenReturn(user);
 
@@ -49,7 +50,16 @@ public class UserServiceTests {
     }
 
     @Test
-    public void itDeletesCar() throws UserNotFoundException {
+    public void itThrownUserNotFoundExceptionWhenUserUpdates() {
+        when(user.getId()).thenReturn(ID);
+
+        assertThatThrownBy(() -> userService.updateUser(user))
+                .hasMessage(String.format("User with %d not found", ID))
+                .isInstanceOf(UserNotFoundException.class);
+    }
+
+    @Test
+    public void itDeletesUser() throws UserNotFoundException {
         when(userRepository.findUserById(ID)).thenReturn(user);
 
         userService.deletedUserById(ID);
@@ -58,11 +68,25 @@ public class UserServiceTests {
     }
 
     @Test
-    public void itGotCar() throws UserNotFoundException {
+    public void itThrownUserNotFoundExceptionWhenUserIsMissingDeletes() {
+        assertThatThrownBy(() -> userService.deletedUserById(ID))
+                .hasMessage(String.format("User with %d not found", ID))
+                .isInstanceOf(UserNotFoundException.class);
+    }
+
+    @Test
+    public void itGetsUser() throws UserNotFoundException {
         when(userRepository.findUserById(ID)).thenReturn(user);
 
         userService.getUserById(ID);
 
         verify(userRepository).findUserById(ID);
+    }
+
+    @Test
+    public void itThrownUserNotFoundExceptionWhenUserIsMissingGets() {
+        assertThatThrownBy(() -> userService.getUserById(ID))
+                .hasMessage(String.format("User with %d not found", ID))
+                .isInstanceOf(UserNotFoundException.class);
     }
 }

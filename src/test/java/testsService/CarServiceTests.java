@@ -1,6 +1,7 @@
 package testsService;
 
 import com.sherlock.box.exception.CarNotFoundException;
+import com.sherlock.box.exception.OrderNotFoundException;
 import com.sherlock.box.models.Car;
 import com.sherlock.box.repositories.CarRepository;
 import com.sherlock.box.service.CarService;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -26,7 +28,7 @@ public class CarServiceTests {
     private Car car;
 
     @BeforeEach
-    private void setUp() {
+    public void setUp() {
         carService = new CarService(carRepository);
     }
 
@@ -48,6 +50,15 @@ public class CarServiceTests {
     }
 
     @Test
+    public void itThrownCarNotFoundExceptionWhenCarUpdates() {
+        when(car.getId()).thenReturn(ID);
+
+        assertThatThrownBy(() -> carService.updateCar(car))
+                .hasMessage(String.format("Car with %d not found", ID))
+                .isInstanceOf(CarNotFoundException.class);
+    }
+
+    @Test
     public void itDeletesCar() throws CarNotFoundException {
         when(carRepository.findCarById(ID)).thenReturn(car);
 
@@ -57,12 +68,26 @@ public class CarServiceTests {
     }
 
     @Test
-    public void itGotCar() throws CarNotFoundException {
+    public void itThrownCarNotFoundExceptionWhenCarDeletes() {
+        assertThatThrownBy(() -> carService.deletedCarById(ID))
+                .hasMessage(String.format("Car with %d not found", ID))
+                .isInstanceOf(CarNotFoundException.class);
+    }
+
+    @Test
+    public void itGetsCar() throws CarNotFoundException {
         when(carRepository.findCarById(ID)).thenReturn(car);
 
         carService.getCarById(ID);
 
         verify(carRepository).findCarById(ID);
+    }
+
+    @Test
+    public void itThrownCarNotFoundExceptionWhenCarGets() {
+        assertThatThrownBy(() -> carService.getCarById(ID))
+                .hasMessage(String.format("Car with %d not found", ID))
+                .isInstanceOf(CarNotFoundException.class);
     }
 
 }
