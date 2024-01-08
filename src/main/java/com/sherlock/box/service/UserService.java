@@ -49,7 +49,7 @@ public class UserService {
 
     public void updateUser(User newUser) throws UserNotFoundException {
         User user = userRepository.findUserById(newUser.getId());
-        if (isNull(newUser)) {
+        if (isNull(user)) {
             LOGGER.info("User with " + newUser.getId() + " not found");
             throw new UserNotFoundException(String.format("User with %d not found", newUser.getId()));
         }
