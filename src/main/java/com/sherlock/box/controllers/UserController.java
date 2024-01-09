@@ -1,5 +1,6 @@
 package com.sherlock.box.controllers;
 
+import com.sherlock.box.dto.UserDTO;
 import com.sherlock.box.exception.CarNotFoundException;
 import com.sherlock.box.exception.OrderNotFoundException;
 import com.sherlock.box.exception.UserNotFoundException;
@@ -20,7 +21,7 @@ public class UserController {
 
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable long id) throws UserNotFoundException {
+    public ResponseEntity<UserDTO> getUserById(@PathVariable long id) throws UserNotFoundException {
         return userService.getUserById(id);
     }
 

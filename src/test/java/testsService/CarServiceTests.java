@@ -1,7 +1,6 @@
 package testsService;
 
 import com.sherlock.box.exception.CarNotFoundException;
-import com.sherlock.box.exception.OrderNotFoundException;
 import com.sherlock.box.models.Car;
 import com.sherlock.box.repositories.CarRepository;
 import com.sherlock.box.service.CarService;
@@ -10,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.modelmapper.ModelMapper;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
@@ -27,9 +27,12 @@ public class CarServiceTests {
     @Mock
     private Car car;
 
+    @Mock
+    private ModelMapper modelMapper;
+
     @BeforeEach
     public void setUp() {
-        carService = new CarService(carRepository);
+        carService = new CarService(carRepository, modelMapper);
     }
 
     @Test

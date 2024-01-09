@@ -1,6 +1,8 @@
 package com.sherlock.box.service;
 
+import com.sherlock.box.dto.UserDTO;
 import com.sherlock.box.exception.UserNotFoundException;
+import com.sherlock.box.mapper.UserMapper;
 import com.sherlock.box.models.User;
 import com.sherlock.box.repositories.UserRepository;
 import org.slf4j.Logger;
@@ -23,14 +25,14 @@ public class UserService {
     }
 
 
-    public ResponseEntity<User> getUserById(Long id) throws UserNotFoundException {
+    public ResponseEntity<UserDTO> getUserById(Long id) throws UserNotFoundException {
         User user = userRepository.findUserById(id);
         if (isNull(user)) {
             LOGGER.info("User with " + id + " not found");
             throw new UserNotFoundException(String.format("User with %d not found", id)); // якщо не знайшов кидай помилку
         }
         LOGGER.info("User has been got. ID:" + user.getId());
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(UserMapper.toUserDTO(user), HttpStatus.OK);
     }
 
     public ResponseEntity<String> deletedUserById(Long id) throws UserNotFoundException {
