@@ -1,4 +1,4 @@
-package com.sherlock.box;
+package testsController;
 
 import com.sherlock.box.controllers.UserController;
 import com.sherlock.box.exception.CarNotFoundException;
