@@ -1,8 +1,11 @@
 package com.sherlock.box.service;
 
+import com.sherlock.box.dto.OrderDTO;
 import com.sherlock.box.exception.OrderNotFoundException;
+import com.sherlock.box.mapper.OrderMapper;
 import com.sherlock.box.models.Order;
 import com.sherlock.box.repositories.OrderRepository;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -18,19 +21,23 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
-    public OrderService(OrderRepository orderRepository) {
+    private final ModelMapper modelMapper;
+
+
+    public OrderService(OrderRepository orderRepository, ModelMapper modelMapper) {
         this.orderRepository = orderRepository;
+        this.modelMapper = modelMapper;
     }
 
 
-    public ResponseEntity<Order> getOrderById(Long id) throws OrderNotFoundException {
+    public ResponseEntity<OrderDTO> getOrderById(Long id) throws OrderNotFoundException {
         Order order = orderRepository.findOrderById(id);
         if (isNull(order)) {
             LOGGER.info("Order with " + id + " not found");
             throw new OrderNotFoundException(String.format("Order with %d not found", id));
         }
         LOGGER.info("Order has been got. ID:" + order.getId());
-        return new ResponseEntity<>(order, HttpStatus.OK);
+        return new ResponseEntity<>(OrderMapper.toOrderDTO(order), HttpStatus.OK);
     }
 
     public ResponseEntity<String> deletedOrderById(Long id) throws OrderNotFoundException {

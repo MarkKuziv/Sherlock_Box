@@ -1,5 +1,6 @@
 package com.sherlock.box.controllers;
 
+import com.sherlock.box.dto.OrderDTO;
 import com.sherlock.box.exception.CarNotFoundException;
 import com.sherlock.box.exception.OrderNotFoundException;
 import com.sherlock.box.models.Order;
@@ -19,7 +20,7 @@ public class OrderController {
 
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Order> getOrderById(@PathVariable long id) throws OrderNotFoundException {
+    public ResponseEntity<OrderDTO> getOrderById(@PathVariable long id) throws OrderNotFoundException {
         return orderService.getOrderById(id);
     }
 

@@ -1,8 +1,10 @@
 package com.sherlock.box.service;
 
+import com.sherlock.box.dto.CarDTO;
 import com.sherlock.box.exception.CarNotFoundException;
 import com.sherlock.box.models.Car;
 import com.sherlock.box.repositories.CarRepository;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -18,19 +20,22 @@ public class CarService {
 
     private final CarRepository carRepository;
 
+    private final ModelMapper modelMapper;
 
-    public CarService(CarRepository carRepository) {
+
+    public CarService(CarRepository carRepository, ModelMapper modelMapper) {
         this.carRepository = carRepository;
+        this.modelMapper = modelMapper;
     }
 
-    public ResponseEntity<Car> getCarById(Long id) throws CarNotFoundException {
+    public ResponseEntity<CarDTO> getCarById(Long id) throws CarNotFoundException {
         Car car = carRepository.findCarById(id);
         if (isNull(car)) {
             LOGGER.info("Car with " + id + " not found");
             throw new CarNotFoundException(String.format("Car with %d not found", id)); // якщо не знайшов кидай помилку
         }
         LOGGER.info("Car has been got. ID:" + car.getId());
-        return new ResponseEntity<>(car, HttpStatus.OK);
+        return new ResponseEntity<>(modelMapper.map(car, CarDTO.class), HttpStatus.OK);
     }
 
     public ResponseEntity<String> deletedCarById(Long id) throws CarNotFoundException {

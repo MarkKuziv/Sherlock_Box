@@ -1,5 +1,6 @@
 package com.sherlock.box.controllers;
 
+import com.sherlock.box.dto.CarDTO;
 import com.sherlock.box.exception.CarNotFoundException;
 import com.sherlock.box.models.Car;
 import com.sherlock.box.service.CarService;
@@ -18,7 +19,7 @@ public class CarController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Car> getCarById(@PathVariable long id) throws CarNotFoundException{
+    public ResponseEntity<CarDTO> getCarById(@PathVariable long id) throws CarNotFoundException{
         return carService.getCarById(id);
     }
 

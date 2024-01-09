@@ -1,7 +1,6 @@
 package testsService;
 
 import com.sherlock.box.exception.OrderNotFoundException;
-import com.sherlock.box.exception.UserNotFoundException;
 import com.sherlock.box.models.Order;
 import com.sherlock.box.repositories.OrderRepository;
 import com.sherlock.box.service.OrderService;
@@ -10,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.modelmapper.ModelMapper;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.verify;
@@ -28,9 +28,12 @@ public class OrderServiceTests {
     @Mock
     private Order order;
 
+    @Mock
+    private ModelMapper modelMapper;
+
     @BeforeEach
     public void setUp(){
-        orderService = new OrderService(orderRepository);
+        orderService = new OrderService(orderRepository, modelMapper);
     }
 
     @Test
